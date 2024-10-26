@@ -1,0 +1,21 @@
+[submodule "services/api-gateway"]
+	path = services/api-gateway
+	url = https://github.com/vrj93/api-gateway.git
+[submodule "services/product-service"]
+	path = services/product-service
+	url = https://github.com/vrj93/product-service.git
+[submodule "services/user-service"]
+	path = services/user-service
+	url = https://github.com/vrj93/user-service.git
+[submodule "services/order-service"]
+	path = services/order-service
+	url = https://github.com/vrj93/order-service.git
+[submodule "services/cart-service"]
+	path = services/cart-service
+	url = https://github.com/vrj93/cart-service.git
+[submodule "services/payment-service"]
+	path = services/payment-service
+	url = https://github.com/vrj93/payment-service.git
+[submodule "services/notification-service"]
+	path = services/notification-service
+	url = https://github.com/vrj93/notification-service.git
