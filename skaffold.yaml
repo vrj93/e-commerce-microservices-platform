@@ -8,8 +8,7 @@ build:
       context: services/product-service
 manifests:
   rawYaml:
-    - kubernetes/base/product-service/*
-    - shared/*
+    - kubernetes/base/**/*
 portForward:
   - resourceType: deployment
     resourceName: product-deployment
