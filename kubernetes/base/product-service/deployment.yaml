@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-deployment
+  template:
+    metadata:
+      labels:
+        app: product-deployment
+    spec:
+      containers:
+      - name: product-deployment
+        image: product-service:latest # Repo image
+        imagePullPolicy: Never
+        env:
+          - name: MONGO_URI
+            value: "mongodb://product-mongo-svc:27017/"
+        ports:
+          - containerPort: 3000
+      serviceAccountName: product-sa
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-mongo-dp
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: database
+      app: product-mongo-dp
+  template:
+    metadata:
+      labels:
+        role: database
+        app: product-mongo-dp
+    spec:
+      containers:
+      - name: product-mongo-dp
+        image: mongo:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 27017
