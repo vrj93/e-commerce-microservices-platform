@@ -1,0 +1,42 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: e-commerce-microservice
+build:
+  artifacts:
+    - image: product-service
+      context: services/product-service
+manifests:
+  rawYaml:
+    - kubernetes/base/product-service/*
+    - shared/*
+portForward:
+  - resourceType: deployment
+    resourceName: product-deployment
+    port: 3000
+    localPort: 3000
+  - resourceType: deployment
+    resourceName: product-mongo-dp
+    port: 27017
+    localPort: 27018
+profiles:
+  - name: dev
+    build:
+      artifacts:
+        - image: product-service
+          context: services/product-service
+          sync:
+            manual:
+              - src: src/**/*
+                dest: .
+          docker:
+            dockerfile: services/product-service/Dockerfile
+    portForward:
+      - resourceType: service
+        resourceName: product-svc
+        port: 3000
+        localPort: 3000
+      - resourceType: service
+        resourceName: product-mongo-svc
+        port: 27017
+        localPort: 27018
