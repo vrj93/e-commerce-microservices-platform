@@ -14,22 +14,23 @@ spec:
         app: product-deployment
     spec:
       containers:
-      - name: product-deployment
-        image: product-service:latest # Repo image
-        imagePullPolicy: Never
-        env:
-          - name: MONGO_URI
-            value: "mongodb://product-mongo-svc:27017/"
-        ports:
-          - containerPort: 3000
+        - name: product-deployment
+          image: product-service:latest
+          imagePullPolicy: Never
+          envFrom:
+            - configMapRef:
+                name: product-service-configmap
+          ports:
+            - containerPort: 3000
       serviceAccountName: product-sa
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: product-mongo-dp
   namespace: default
 spec:
+  serviceName: "product-mongo-svc"
   replicas: 1
   selector:
     matchLabels:
@@ -42,8 +43,19 @@ spec:
         app: product-mongo-dp
     spec:
       containers:
-      - name: product-mongo-dp
-        image: mongo:latest
-        imagePullPolicy: Always
-        ports:
-          - containerPort: 27017
+        - name: product-mongo-dp
+          image: mongo:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - mountPath: "/data/db"
+              name: product-mongo-storage
+  volumeClaimTemplates:
+    - metadata:
+        name: product-mongo-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

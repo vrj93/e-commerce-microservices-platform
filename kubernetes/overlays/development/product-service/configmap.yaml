@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-service-configmap
+  namespace: default
+data:
+  mongoConnect: "mongodb://product-mongo-svc:27017/product-service"
