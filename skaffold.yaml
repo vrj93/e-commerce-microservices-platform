@@ -8,16 +8,17 @@ build:
       context: services/product-service
 manifests:
   rawYaml:
-    - kubernetes/base/**/*
+    - kubernetes/base/**/*.yaml
+    - kubernetes/overlays/**/**/*.yaml
 portForward:
   - resourceType: deployment
     resourceName: product-deployment
     port: 3000
     localPort: 3000
-  - resourceType: deployment
+  - resourceType: StatefulSet
     resourceName: product-mongo-dp
     port: 27017
-    localPort: 27018
+    localPort: 27017
 profiles:
   - name: dev
     build:
@@ -38,4 +39,4 @@ profiles:
       - resourceType: service
         resourceName: product-mongo-svc
         port: 27017
-        localPort: 27018
+        localPort: 27017
