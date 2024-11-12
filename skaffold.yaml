@@ -19,6 +19,16 @@ portForward:
     resourceName: product-mongo-dp
     port: 27017
     localPort: 27017
+  - resourceType: service
+    resourceName: elasticsearch-es-http
+    namespace: default
+    port: 9200
+    localPort: 9200
+  - resourceType: service
+    resourceName: kibana-kb-http
+    namespace: default
+    port: 5601
+    localPort: 5601
 profiles:
   - name: dev
     build:
