@@ -1,0 +1,30 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+spec:
+  version: 8.15.3
+  nodeSets:
+    - name: default
+      count: 1
+      config:
+        node.store.allow_mmap: false
+        # Set JVM heap to a lower value to conserve memory
+        # This limits Elasticsearch's memory usage within WSL
+        node:
+          attr:
+            xpack.ml.enabled: false # Disable machine learning features
+      podTemplate:
+        spec:
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 512Mi
+                  cpu: 500m
+                limits:
+                  memory: 1Gi
+                  cpu: 1
+              env:
+                - name: ES_JAVA_OPTS
+                  value: "-Xms512m -Xmx512m" # Set JVM heap to 512 MB
