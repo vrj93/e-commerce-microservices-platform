@@ -5,3 +5,4 @@ metadata:
   namespace: default
 data:
   mongoConnect: "mongodb://product-mongo-svc:27017/product-service"
+  elasticConnect: "https://elasticsearch-es-http:9200"

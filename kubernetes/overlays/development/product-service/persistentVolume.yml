@@ -6,7 +6,7 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: manual
+  storageClassName: "manual"
   capacity:
     storage: 2Gi
   accessModes:
@@ -18,15 +18,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: product-mongo-volume-claim
-  namespace: default
+  name: product-mongo-pvc
 spec:
-  storageClassName: manual
-  selector:
-    matchLabels:
-      type: local
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
+  storageClassName: "manual"

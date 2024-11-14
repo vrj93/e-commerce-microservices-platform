@@ -6,6 +6,12 @@ build:
   artifacts:
     - image: product-service
       context: services/product-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: src/**/*
+            dest: /usr/src/app/src  # Sync only relevant files
 manifests:
   rawYaml:
     - kubernetes/base/**/*.yaml
@@ -19,16 +25,6 @@ portForward:
     resourceName: product-mongo-dp
     port: 27017
     localPort: 27017
-  - resourceType: service
-    resourceName: elasticsearch-es-http
-    namespace: default
-    port: 9200
-    localPort: 9200
-  - resourceType: service
-    resourceName: kibana-kb-http
-    namespace: default
-    port: 5601
-    localPort: 5601
 profiles:
   - name: dev
     build:
@@ -37,16 +33,5 @@ profiles:
           context: services/product-service
           sync:
             manual:
-              - src: src/**/*
-                dest: .
-          docker:
-            dockerfile: services/product-service/Dockerfile
-    portForward:
-      - resourceType: service
-        resourceName: product-svc
-        port: 3000
-        localPort: 3000
-      - resourceType: service
-        resourceName: product-mongo-svc
-        port: 27017
-        localPort: 27017
+              - src: src/**/*.ts
+                dest: /usr/src/app/src  # Only sync .ts files for development

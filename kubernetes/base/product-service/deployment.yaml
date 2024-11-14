@@ -20,6 +20,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: product-service-configmap
+            - secretRef:
+                name: product-service-secret
           ports:
             - containerPort: 3000
       serviceAccountName: product-sa
