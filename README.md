@@ -1,1 +1,1 @@
-# E-Commerce Microservices Platform
+# ECommerce Microservices Platform
