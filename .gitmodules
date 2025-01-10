@@ -1,18 +1,18 @@
 [submodule "services/product-service"]
 	path = services/product-service
-	url = https://gitlab.com/vrj93/product-service.git
+	url = https://github.com/vrj93/product-service.git
 [submodule "services/user-service"]
 	path = services/user-service
-	url = https://gitlab.com/vrj93/user-service.git
+	url = https://github.com/vrj93/user-service.git
 [submodule "services/order-service"]
 	path = services/order-service
-	url = https://gitlab.com/vrj93/order-service.git
+	url = https://github.com/vrj93/order-service.git
 [submodule "services/cart-service"]
 	path = services/cart-service
-	url = https://gitlab.com/vrj93/cart-service.git
+	url = https://github.com/vrj93/cart-service.git
 [submodule "services/payment-service"]
 	path = services/payment-service
-	url = https://gitlab.com/vrj93/payment-service.git
+	url = https://github.com/vrj93/payment-service.git
 [submodule "services/notification-service"]
 	path = services/notification-service
-	url = https://gitlab.com/vrj93/notification-service.git
+	url = https://github.com/vrj93/notification-service.git
