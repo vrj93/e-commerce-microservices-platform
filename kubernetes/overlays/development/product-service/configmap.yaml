@@ -4,6 +4,4 @@ metadata:
   name: product-service-configmap
   namespace: default
 data:
-  mongoConnect: "mongodb://product-mongo-svc:27017/product-service?replicaSet=rs0"
-  elasticConnect: "https://elasticsearch-es-http:9200"
-  machineIP: "192.168.0.100"
+  mongoConnect: "mongodb://product-mongo-svc.default.svc.cluster.local:27017/product-service?replicaSet=rs0"

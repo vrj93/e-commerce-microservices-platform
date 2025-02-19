@@ -12,6 +12,14 @@ build:
         manual:
           - src: src/**/*
             dest: /usr/src/app/src  # Sync only relevant files
+    - image: elastic-service
+      context: services/elastic-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: src/**/*
+            dest: /usr/src/app/src
 manifests:
   rawYaml:
     - kubernetes/base/**/*.yaml
@@ -35,3 +43,9 @@ profiles:
             manual:
               - src: src/**/*.ts
                 dest: /usr/src/app/src  # Only sync .ts files for development
+        - image: elastic-service
+          context: services/elastic-service
+          sync:
+            manual:
+              - src: src/**/*.ts
+                dest: /usr/src/app/src

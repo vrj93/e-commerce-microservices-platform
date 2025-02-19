@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elastic-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elastic-deployment
+  template:
+    metadata:
+      labels:
+        app: elastic-deployment
+    spec:
+      containers:
+        - name: elastic-deployment
+          image: elastic-service:latest
+          imagePullPolicy: Never
+          envFrom:
+            - configMapRef:
+                name: elastic-service-configmap
+            - secretRef:
+                name: elastic-service-secret
+          ports:
+            - containerPort: 3001

@@ -33,7 +33,7 @@ metadata:
   namespace: default
 spec:
   serviceName: "product-mongo-svc"
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       role: database
@@ -48,13 +48,7 @@ spec:
         - name: product-mongo-dp
           image: mongo:latest
           imagePullPolicy: Always
-          command:
-            - "sh"
-            - "-c"
-            - |
-              mongod --replSet rs0 --bind_ip_all --port 27017 &
-              sleep 10
-              mongosh --host product-mongo-svc:27017 --eval "rs.status()" || mongosh --host product-mongo-svc:27017 --eval 'rs.initiate()'
+          command: ["mongod", "--replSet", "rs0", "--bind_ip", "0.0.0.0"]
           ports:
             - containerPort: 27017
           volumeMounts:

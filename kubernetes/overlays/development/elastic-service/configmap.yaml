@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: elastic-service-configmap
+  namespace: default
+data:
+  elasticConnect: "https://elasticsearch-es-http:9200"
