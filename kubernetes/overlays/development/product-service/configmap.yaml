@@ -5,3 +5,4 @@ metadata:
   namespace: default
 data:
   mongoConnect: "mongodb://product-mongo-svc.default.svc.cluster.local:27017/product-service?replicaSet=rs0"
+  kafkaConnect: "192.168.0.100:9092"
