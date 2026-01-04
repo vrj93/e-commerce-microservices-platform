@@ -1,0 +1,73 @@
+name: e-commerce-microservice-k8s
+
+services:
+  # -----------------------------
+  # Product Service
+  # -----------------------------
+  product-service:
+    build:
+      context: ./services/product-service
+      dockerfile: Dockerfile
+    image: product-service:latest
+    container_name: product-service
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./docker/env/product-service.env
+      - ./docker/env/product-service.secret.env
+    depends_on:
+      - product-mongo
+    restart: unless-stopped
+    networks:
+      - app-network
+      - product-db-network
+
+  # -----------------------------
+  # Elastic Service
+  # -----------------------------
+  elastic-service:
+    build:
+      context: ./services/elastic-service
+      dockerfile: Dockerfile
+    image: elastic-service:latest
+    container_name: elastic-service
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./docker/env/elastic-service.env
+      - ./docker/env/elastic-service.secret.env
+    depends_on:
+      product-mongo:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # -----------------------------
+  # MongoDB (Standalone - Local Dev)
+  # -----------------------------
+  product-mongo:
+    image: mongo:7
+    container_name: product-mongo
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27017:27017"
+    volumes:
+      - product-mongo-data:/data/db
+    restart: unless-stopped
+    networks:
+      - product-db-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.isMaster().ismaster"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  product-mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
+  product-db-network:
+    driver: bridge
