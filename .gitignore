@@ -1,2 +1,2 @@
-notes
 kubernetes/overlays/**/secret.yaml
+docker/env/*
