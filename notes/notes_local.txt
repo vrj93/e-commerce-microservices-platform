@@ -1,0 +1,37 @@
+Minikube Docker (WSL only, Not Docker Desktop):
+	eval $(minikube docker-env)
+	eval $(minikube docker-env --unset)
+
+API Gateway config (One time)
+	kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml
+
+ElasticSearch
+	Starup (Machine Hosted)
+		cd C:/projects/elasticsearch
+		bin/elasticsearch.bat
+
+	Config (One time for Containers)
+		kubectl create -f https://download.elastic.co/downloads/eck/2.15.0/crds.yaml
+		kubectl apply -f https://download.elastic.co/downloads/eck/2.15.0/operator.yaml
+
+Kafka Startup (Machine Hosted through GIT Bash)
+	cd /c/projects/kafka
+
+	# Start the ZooKeeper service
+	bin/zookeeper-server-start.sh config/zookeeper.properties
+
+	# Start the Kafka broker service
+	bin/kafka-server-start.sh config/server.properties
+
+	bin/kafka-topics.sh --create --topic product-changes --bootstrap-server localhost:9092
+
+	bin/kafka-console-producer.sh --topic product-changes --bootstrap-server localhost:9092
+
+	bin/kafka-console-consumer.sh --topic product-changes --from-beginning --bootstrap-server localhost:9092
+
+How to Run?
+	Start Minikube
+		minikube start
+
+	Start the K8s project
+		With Skaffold Dev Automation: skaffold dev
